@@ -10,7 +10,7 @@ import {
   PathFns,
   PathGroupResult,
 } from "./models";
-import { notNil } from "./utilities";
+import { notNil, mapObject } from "./utilities";
 
 /**
  * Calculates the real part of the omega value. This is the dampened
@@ -122,27 +122,19 @@ export const create_harmonic_group = <T extends string>(
   const omega = calc_omega(config);
   const damp = calc_damp(config);
 
-  const keys = Object.keys(from) as T[];
-  velocity = notNil(velocity)
-    ? velocity
-    : keys.reduce((acc, key) => {
-        acc[key] = 0;
-        return acc;
-      }, {} as Record<T, number>);
+  velocity = notNil(velocity) ? velocity : mapObject(from, () => 0);
 
-  return keys.reduce((acc, key: T) => {
-    const amplitude = from[key] - to[key];
+  return mapObject(from, (f, key) => {
+    const amplitude = f - to[key];
     const rest = to[key];
     const v = velocity![key];
     const b = calc_b(omega, damp, amplitude, v);
 
-    acc[key] = {
+    return {
       position: calc_position(omega, damp, amplitude, b, rest),
       velocity: calc_velocity(omega, damp, amplitude, b),
     };
-
-    return acc;
-  }, {} as PathFns<T>);
+  });
 };
 
 /**
@@ -154,17 +146,8 @@ export const create_harmonic_group = <T extends string>(
 export const run_harmonic_group = <T extends string>(
   group: Record<T, HarmonicFns>,
   time: number
-): PathGroupResult<T> => {
-  const keys = Object.keys(group) as T[];
-  return keys.reduce(
-    (acc, key) => {
-      acc.position[key] = group[key].position(time);
-      acc.velocity[key] = group[key].velocity(time);
-      return acc;
-    },
-    {
-      position: {},
-      velocity: {},
-    } as PathGroupResult<T>
-  );
-};
+): Record<T, { position: number; velocity: number }> =>
+  mapObject(group, ({ position, velocity }) => ({
+    position: position(time),
+    velocity: velocity(time),
+  }));

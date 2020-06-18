@@ -2,8 +2,15 @@
  * @since 0.0.0
  */
 
-import { of, defer, interval, animationFrameScheduler, Scheduler } from "rxjs";
-import { map, takeWhile, concat } from "rxjs/operators";
+import {
+  of,
+  defer,
+  interval,
+  animationFrameScheduler,
+  Scheduler,
+  BehaviorSubject,
+} from "rxjs";
+import { map, takeWhile, concat, switchMap, tap } from "rxjs/operators";
 
 import { create_harmonic_fns } from "./harmonic";
 import { SpringConfig, SpringPath } from "./models";
@@ -71,4 +78,39 @@ export const spring = (
     map((time) => time / 1000),
     map(position)
   );
+};
+
+/**
+ * Spring path combinator that can be changed
+ *
+ * @since 0.0.2
+ */
+export const springThen = (
+  config: SpringConfig,
+  path: SpringPath,
+  initVelocity: number = 0
+) => {
+  let time = 0;
+  let from = path.from;
+  let fns = create_harmonic_fns(config, path, initVelocity);
+
+  const target$ = new BehaviorSubject(path.to);
+  const position$ = target$.pipe(
+    switchMap((to) => {
+      const velocity = time === 0 ? initVelocity : fns.velocity(time);
+      fns = create_harmonic_fns(config, { from, to }, velocity);
+      return msElapsed().pipe(
+        map((t) => t / 1000),
+        tap((t) => (time = t)),
+        map(fns.position),
+        tap((p) => (from = p))
+      );
+    })
+  );
+
+  const next = (target: number) => target$.next(target);
+  return {
+    position$,
+    next,
+  };
 };
