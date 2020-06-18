@@ -97,7 +97,11 @@ export declare const springThen: (
   config: SpringConfig,
   path: SpringPath,
   initVelocity?: number
-) => { position$: Observable<number>; next: (target: number) => void }
+) => {
+  position$: Observable<number>
+  status: () => { time: number; from: number; to: number; fns: HarmonicFns }
+  next: (target: number) => void
+}
 ```
 
 Added in v0.0.2

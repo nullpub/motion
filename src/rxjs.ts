@@ -109,8 +109,12 @@ export const springThen = (
   );
 
   const next = (target: number) => target$.next(target);
+
+  const status = () => ({ time, from, to: target$.getValue(), fns });
+
   return {
     position$,
+    status,
     next,
   };
 };
