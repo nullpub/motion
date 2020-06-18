@@ -97,7 +97,7 @@ export const springThen = (
   const target$ = new BehaviorSubject(path.to);
   const position$ = target$.pipe(
     switchMap((to) => {
-      const velocity = time === 0 ? initVelocity : fns.velocity(time);
+      const velocity = fns.velocity(time);
       fns = create_harmonic_fns(config, { from, to }, velocity);
       return msElapsed().pipe(
         map((t) => t / 1000),
