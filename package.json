@@ -1,0 +1,51 @@
+{
+  "name": "@nll/motion",
+  "version": "0.0.0",
+  "description": "Damped harmonic motion",
+  "main": "index.js",
+  "files": [
+    "*"
+  ],
+  "private": true,
+  "sideEffects": false,
+  "scripts": {
+    "build-clean": "rm -rf dist",
+    "build-tsc": "tsc",
+    "build-prepare": "ts-node --skip-project ./scripts/prepare.ts",
+    "build-notify": "echo 'To publish run: cd dist; npm publish'",
+    "build": "npm run build-clean && npm run docs && npm run build-tsc && npm run build-prepare && npm run build-notify",
+    "docs": "npx docs-ts",
+    "release": "npx standard-version",
+    "test": "echo 'No tests implemented!'"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/nullpub/motion.git"
+  },
+  "keywords": [
+    "animation"
+  ],
+  "author": "Brandon Blaylock <brandon@null.pub> (https://blaylock.dev)",
+  "license": "MPL-2.0",
+  "bugs": {
+    "url": "https://github.com/nullpub/motion/issues"
+  },
+  "homepage": "https://github.com/nullpub/motion#readme",
+  "devDependencies": {
+    "@babel/core": "^7.10.2",
+    "@babel/preset-env": "^7.10.2",
+    "@types/jest": "^26.0.0",
+    "babel-jest": "^26.0.1",
+    "coveralls": "^3.1.0",
+    "docs-ts": "^0.5.1",
+    "jest": "^26.0.1",
+    "prettier": "^2.0.5",
+    "standard-version": "^8.0.0",
+    "ts-jest": "^26.1.0",
+    "ts-node": "^8.10.2",
+    "typescript": "^3.9.5"
+  },
+  "dependencies": {
+    "rxjs": "^6.5.5"
+  }
+}
