@@ -18,6 +18,7 @@ Added in v0.0.0
   - [msElapsed](#mselapsed)
   - [scale](#scale)
   - [spring](#spring)
+  - [springThen](#springthen)
 
 ---
 
@@ -84,3 +85,19 @@ export declare const spring: (config: SpringConfig, path: SpringPath, initVeloci
 ```
 
 Added in v0.0.0
+
+## springThen
+
+Spring path combinator that can be changed
+
+**Signature**
+
+```ts
+export declare const springThen: (
+  config: SpringConfig,
+  path: SpringPath,
+  initVelocity?: number
+) => { position$: Observable<number>; next: (target: number) => void }
+```
+
+Added in v0.0.2

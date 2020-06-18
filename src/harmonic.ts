@@ -2,14 +2,7 @@
  * @since 0.0.0
  */
 
-import {
-  HarmonicFns,
-  SpringConfig,
-  SpringPath,
-  PathGroup,
-  PathFns,
-  PathGroupResult,
-} from "./models";
+import { HarmonicFns, SpringConfig, SpringPath, PathGroup } from "./models";
 import { notNil, mapObject } from "./utilities";
 
 /**

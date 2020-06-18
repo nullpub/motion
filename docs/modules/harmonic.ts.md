@@ -83,7 +83,7 @@ a full PathGroupResult.
 export declare const run_harmonic_group: <T extends string>(
   group: Record<T, HarmonicFns>,
   time: number
-) => PathGroupResult<T>
+) => Record<T, { position: number; velocity: number }>
 ```
 
 Added in v0.0.0
