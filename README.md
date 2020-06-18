@@ -1,5 +1,7 @@
 # @nll/motion
 
+[Documentation](https://nullpub.github.io/motion/)
+
 A quick run at damped harmonic animations (springs). The libraries that I've looked at have inscrutable algorithms:
 
 - react-motion
