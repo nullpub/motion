@@ -1,6 +1,6 @@
 {
   "name": "@nll/motion",
-  "version": "0.0.2-0",
+  "version": "0.0.2-1",
   "description": "Damped harmonic motion",
   "main": "index.js",
   "files": [
